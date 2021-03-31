@@ -1,5 +1,4 @@
 const action = require('../index');
-
 const context = {
     repo: {
         owner: "raulriera",

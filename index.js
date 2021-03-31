@@ -12,6 +12,7 @@ async function triage() {
   const isTriaged = checkLabels(labels, globs);
 
   const client = new github.GitHub(token);
+  const context = github.context;
 
   if (context.eventName === 'issues' && context.payload.action === 'labeled' && context.payload.label.name.toLowerCase() === 'bug' && !isTriaged) {
     await client.issues.createComment({
