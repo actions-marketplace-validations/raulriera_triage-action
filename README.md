@@ -2,6 +2,8 @@
 
 Automatically check that issues are correctly labelled.
 
+## Usage
+
 ## Inputs
 
 Every argument is required.
