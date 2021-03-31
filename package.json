@@ -1,0 +1,20 @@
+{
+  "name": "triage-action",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": ["GitHub", "Action", "Triage", "Bot"],
+  "author": "Raul Riera",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "minimatch": "^3.0.4"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}

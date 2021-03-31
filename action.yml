@@ -1,0 +1,5 @@
+name: 'Triage action'
+description: 'Automatically triage GitHub issues'
+runs:
+  using: 'node12'
+  main: 'index.js'
