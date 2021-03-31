@@ -1,7 +1,7 @@
 {
   "name": "triage-action",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.2.0",
+  "description": "Automatically triage GitHub issues",
   "main": "index.js",
   "scripts": {
     "test": "jest"

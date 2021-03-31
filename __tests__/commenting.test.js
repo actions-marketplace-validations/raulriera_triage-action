@@ -1,4 +1,4 @@
-const action = require('../index');
+const { BotComments } = require("../src/comments");
 
 const context = {
     repo: {
@@ -11,7 +11,7 @@ const context = {
         }
     }
 }
-const github = {
+const client = {
     issues: {
         listComments: {
             endpoint: {
@@ -36,7 +36,8 @@ const github = {
 }
 
 test('multiple comments returns the ones created by the action bot', async () => {
-    const comments = await action.botComments(context, github);
+    const botComments = new BotComments(context, client);
+    const comments = await botComments.all();
 
     expect(comments).toBeInstanceOf(Array);
     expect(comments.length).toBe(1);
