@@ -7111,11 +7111,12 @@ async function triage() {
       owner: context.repo.owner,
       repo: context.repo.repo,
       body: botMessage
-    })
+    });
   }
   else if (context.eventName === 'issue_comment' && context.payload.action === 'created' && context.payload.comment.body === '/triaged') {
-    const botComments = new BotComments(context, client)
-    const comment = await botComments.all().find(comment => comment.body === botMessage)
+    const botComments = new BotComments(context, client);
+    const comments = await botComments.all();
+    const comment = comments.find(comment => comment.body === botMessage);
     if (isTriaged && comment !== undefined) {
       await client.issues.deleteComment({
         owner: context.repo.owner,
