@@ -4,15 +4,16 @@ const github = require('@actions/github');
 
 async function triage() {
   const token = core.getInput('repo-token')
-  const labels = context.payload.issue.labels.map(item => item.name)
   const globs = core.getInput('globs', { required: true })
                     .split("\n")
                     .filter(glob => glob !== "");
   const botMessage = core.getInput('message', { required: true });
-  const isTriaged = checkLabels(labels, globs);
 
   const client = new github.GitHub(token);
   const context = github.context;
+
+  const labels = context.payload.issue.labels.map(item => item.name);
+  const isTriaged = checkLabels(labels, globs);
 
   if (context.eventName === 'issues' && context.payload.action === 'labeled' && context.payload.label.name.toLowerCase() === 'bug' && !isTriaged) {
     await client.issues.createComment({
