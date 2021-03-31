@@ -5,13 +5,13 @@ const { BotComments } = require("./comments");
 const validate = require('./labels');
 
 async function triage() {
-  const token = core.getInput('repo-token')
+  const token = core.getInput('repo-token');
   const globs = core.getInput('globs', { required: true })
                     .split("\n")
                     .filter(glob => glob !== "");
   const botMessage = core.getInput('message', { required: true });
 
-  const client = new github.GitHub(token);
+  const client = github.getOctokit(token);
   const context = github.context;
 
   const labels = context.payload.issue.labels.map(item => item.name);
