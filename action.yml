@@ -10,7 +10,7 @@ inputs:
     description: 'List of minimatch globs to match against labels. See `minimatch` for more information.'
     required: true
   message:
-    description: 'Comment to apply to the issue when it doesn't meet the glob requirements'
+    description: 'Comment to apply to the issue when it does not meet the glob requirements'
     required: true
 runs:
   using: 'node12'
