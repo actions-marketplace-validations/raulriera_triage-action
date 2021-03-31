@@ -2,7 +2,7 @@
 
 # Triage Issues
 
-Automatically check that issues are correctly labelled.
+Automatically check that issues labelled with 'Bug' are correctly labelled.
 
 ## Usage
 
@@ -21,10 +21,16 @@ jobs:
     - uses: raulriera/triage-action@main
       with:
         globs: |
-          P[0-3]
+          Priority [0-3]
           Team:*
-        message: '**Missing information**\n Please see our CONTRIBUTING.md for more information.'
+        message: |
+          **⚠️ Missing information**
+          Please see our CONTRIBUTING.md for more information.
+          
+          When you are ready, please comment to this issue with `/triaged`
 ```
+
+The bot will check that your issue's labels matches all of the globs. Additionally, the bot will check again when there is a new comment with the words `/triaged`.
 
 ## Inputs
 
@@ -34,4 +40,4 @@ Every available option.
 | - | - |
 | `repo-token` | Token to use to authorize label changes. Typically the GITHUB_TOKEN secret. |
 | `globs` | List of [minimatch](https://github.com/isaacs/minimatch) globs to match against labels. |
-| `message` | Comment to apply to the issue when it doesn't meet the glob requirements |
+| `message` | Comment to apply to the issue when it does not meet the glob requirements |
