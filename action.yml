@@ -1,5 +1,17 @@
 name: 'Triage action'
 description: 'Automatically triage GitHub issues'
+author: 'Raul Riera'
+inputs:
+  repo-token:
+    description: 'Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.'
+    required: false
+    default: ${{ github.token }}
+  globs:
+    description: 'List of minimatch globs to match against labels. See `minimatch` for more information.'
+    required: true
+  message:
+    description: 'Comment to apply to the issue when it doesn't meet the glob requirements'
+    required: true
 runs:
   using: 'node12'
   main: 'index.js'

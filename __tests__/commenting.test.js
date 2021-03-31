@@ -11,7 +11,7 @@ const context = {
         }
     }
 }
-const github = {
+const client = {
     issues: {
         listComments: {
             endpoint: {
@@ -36,7 +36,7 @@ const github = {
 }
 
 test('multiple comments returns the ones created by the action bot', async () => {
-    const comments = await action.botComments(context, github);
+    const comments = await action.botComments(context, client);
 
     expect(comments).toBeInstanceOf(Array);
     expect(comments.length).toBe(1);

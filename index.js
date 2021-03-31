@@ -2,16 +2,19 @@ const minimatch = require("minimatch");
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-async function triage(context, github) {
+async function triage() {
+  const token = core.getInput('repo-token')
   const labels = context.payload.issue.labels.map(item => item.name)
   const globs = core.getInput('globs', { required: true })
                     .split("\n")
                     .filter(glob => glob !== "");
   const botMessage = core.getInput('message', { required: true });
-  const isTriaged = checkLabels(labels, globs)
+  const isTriaged = checkLabels(labels, globs);
+
+  const client = new github.GitHub(token);
 
   if (context.eventName === 'issues' && context.payload.action === 'labeled' && context.payload.label.name.toLowerCase() === 'bug' && !isTriaged) {
-    await github.issues.createComment({
+    await client.issues.createComment({
       issue_number: context.payload.issue.number,
       owner: context.repo.owner,
       repo: context.repo.repo,
@@ -19,16 +22,16 @@ async function triage(context, github) {
     })
   }
   else if (context.eventName === 'issue_comment' && context.payload.action === 'created' && context.payload.comment.body === '/triaged') {
-    const comment = await botComments(context, github).find(comment => comment.body === botMessage)
+    const comment = await botComments(context, client).find(comment => comment.body === botMessage)
     if (isTriaged && comment !== undefined) {
-      await github.issues.deleteComment({
+      await client.issues.deleteComment({
         owner: context.repo.owner,
         repo: context.repo.repo,
         comment_id: comment.id
       })
     }
     
-    await github.reactions.createForIssueComment({
+    await client.reactions.createForIssueComment({
       owner: context.repo.owner,
       repo: context.repo.repo,
       comment_id: context.payload.comment.id,
@@ -46,21 +49,22 @@ function checkLabels(labels, globs) {
 /** 
 * Fetches all the comments in a given issue that were created by the bot.
 * @param {Object} context - Object containing all the issue data.
-* @param {Object} github - REST client for the GitHub's API.
+* @param {Object} client - REST client for the GitHub's API.
 * @return {Array} All bot comments (if any).
 */
-async function botComments(context, github) {
-  const options = github.issues.listComments.endpoint.merge({
+async function botComments(context, client) {
+  const options = client.issues.listComments.endpoint.merge({
     owner: context.repo.owner,
     repo: context.repo.repo,
     issue_number: context.payload.issue.number
   })
-  const comments = await github.paginate(options)
+  const comments = await client.paginate(options)
   return comments.filter(comment => comment.user.login === 'github-actions[bot]');
 }
 
+triage();
+
 module.exports = {
-    triage,
     checkLabels,
     botComments
 }
