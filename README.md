@@ -2,11 +2,11 @@
 
 # Triage Issues
 
-Automatically check that issues labelled with 'Bug' are correctly labelled.
+Automatically check that issues labelled with 'Bug' are correctly labelled. In the following example, the bot will check that all bug issues have any of these labels `Priority 0`, `Priority 1`, or `Priority 2`. Plus, a team specific label. So the resulting issue should be triaged as: `Bug`, `Priority 2`, `Team: Backend`.
 
 ## Usage
 
-```
+```yaml
 name: "Issue triage"
 on:
   issue_comment:
@@ -21,7 +21,7 @@ jobs:
     - uses: raulriera/triage-action@main
       with:
         globs: |
-          Priority [0-3]
+          Priority [0-2]
           Team:*
         message: |
           **⚠️ Missing information**
