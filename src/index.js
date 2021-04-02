@@ -4,7 +4,7 @@ const github = require('@actions/github');
 const { BotComments } = require("./comments");
 const validate = require('./labels');
 
-async function triage() {
+async function run() {
   const token = core.getInput('repo-token');
   const globs = core.getInput('globs', { required: true })
                     .split("\n")
@@ -46,4 +46,8 @@ async function triage() {
   }
 }
 
-triage();
+try {
+  run();
+} catch (error) {
+  core.setFailed(error.message);
+}

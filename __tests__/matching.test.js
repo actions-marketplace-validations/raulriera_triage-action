@@ -8,7 +8,7 @@ test('matching is true if all globs are found in the list', () => {
     expect(some).toBe(false);
 });
 
-test('matching is alwas case insensitive', () => {
+test('matching is always case insensitive', () => {
     const uppercase = validate(['RAUL'], ['raul']);
     const lowercase = validate(['github'], ['Git*']);
     

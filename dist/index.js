@@ -7092,7 +7092,7 @@ const github = __nccwpck_require__(5438);
 const { BotComments } = __nccwpck_require__(4975);
 const validate = __nccwpck_require__(9234);
 
-async function triage() {
+async function run() {
   const token = core.getInput('repo-token');
   const globs = core.getInput('globs', { required: true })
                     .split("\n")
@@ -7134,7 +7134,11 @@ async function triage() {
   }
 }
 
-triage();
+try {
+  run();
+} catch (error) {
+  core.setFailed(error.message);
+}
 
 /***/ }),
 
