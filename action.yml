@@ -1,6 +1,9 @@
-name: 'Triage action'
-description: 'Automatically triage GitHub issues'
+name: 'Triage issues'
+description: 'Automatically enforce a label structure to all your issues.'
 author: 'Raul Riera'
+branding:
+  icon: 'check'
+  color: 'blue'
 inputs:
   repo-token:
     description: 'Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.'
